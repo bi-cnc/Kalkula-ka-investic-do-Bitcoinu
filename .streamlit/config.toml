@@ -1,0 +1,5 @@
+[theme]
+primaryColor = "#FF4B4B"  # Například světle červená
+backgroundColor = "#FFFFFF"  # Bílá pro hlavní pozadí
+secondaryBackgroundColor = "#F0F0F0"  # Světle šedá pro sekundární pozadí
+textColor = "#000000"  # Černá pro text
