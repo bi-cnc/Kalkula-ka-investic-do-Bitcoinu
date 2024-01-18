@@ -63,8 +63,8 @@ def main():
             st.error(f"Potenciální ztráta: {formatted_profit_loss} ({formatted_profit_loss_percentage})")
 
     # Zobrazit graf
-    st.write()
-    st.write()
+    st.write("")
+    st.write("")
     plot_bitcoin_data(bitcoin_data, start_date, end_date)
 
 if __name__ == "__main__":
