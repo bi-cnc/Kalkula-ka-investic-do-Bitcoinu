@@ -42,8 +42,7 @@ def plot_bitcoin_data(bitcoin_data, start_date, end_date):
 
 # Streamlit aplikace
 def main():
-    st.title("Kolik bych vydělal, kdybych investoval...")
-    st.subheader('Kalkulačka investic do Bitcoinu')
+    st.title("Kalkulačka investic do Bitcoinu")
 
     start_date = st.date_input("Zadejte počáteční datum", datetime(2020, 1, 1))
     end_date = st.date_input("Zadejte koncové datum", datetime.now())
