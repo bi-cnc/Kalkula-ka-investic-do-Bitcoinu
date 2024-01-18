@@ -46,8 +46,8 @@ def main():
     large_font = "<h2 style='font-size:16px; color: black;'>Kalkulačka investic do Bitcoinu 🚀</h2>"
     st.markdown(large_font, unsafe_allow_html=True)
 
-    start_date = st.date_input("Zadejte počáteční datum", datetime(2020, 1, 1))
-    end_date = st.date_input("Zadejte koncové datum", datetime.now())
+    start_date = st.date_input("Den investice", datetime(2020, 1, 1))
+    end_date = st.date_input("Den výběru peněz", datetime.now())
     investment_czk = st.number_input("Zadejte investovanou částku v Kč", min_value=0.0, value=10000.0)
 
     bitcoin_data, czk_usd_rate = fetch_data(start_date, end_date)
