@@ -64,7 +64,6 @@ def main():
 
     # Zobrazit graf
     st.write("")
-    st.write("")
     plot_bitcoin_data(bitcoin_data, start_date, end_date)
 
 if __name__ == "__main__":
