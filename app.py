@@ -1,6 +1,6 @@
 import streamlit as st
 import yfinance as yf
-from datetime import datetime
+from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 
 # Nastavení Streamlitu pro zobrazení grafů
@@ -45,24 +45,31 @@ def main():
     st.title("Kdybych investoval, kolik bych vydělal nebo prodělal?")
     large_font = "<h2 style='font-size:16px; color: black;'>Kalkulačka investic do Bitcoinu 🚀</h2>"
     st.markdown(large_font, unsafe_allow_html=True)
+    max_start_date = datetime.now() - timedelta(days=7)
 
-    start_date = st.date_input("Den investice", datetime(2020, 1, 1))
+    start_date = st.date_input("Den investice", datetime(2020, 1, 1),max_value=max_start_date)
     end_date = st.date_input("Den výběru peněz", datetime.now())
     investment_czk = st.number_input("Zadejte investovanou částku v Kč", min_value=0.0, value=10000.0)
 
-    bitcoin_data, czk_usd_rate = fetch_data(start_date, end_date)
+    # Kontrola, zda start_date není po end_date a nejsou stejná
+    if start_date >= end_date:
+        st.error("Datum investice nemůže být později než datum výběru peněz. Prosím, upravte data.")
+        bitcoin_data, czk_usd_rate = fetch_data(start_date, end_date)
+    else:
+        # Pokud jsou data v pořádku, zobrazit tlačítko
+        bitcoin_data, czk_usd_rate = fetch_data(start_date, end_date)
+        if st.button("Spočítejte potenciální zisk/ztrátu"):
+            profit_loss_czk, profit_loss_percentage = calculate_profit_loss(bitcoin_data, czk_usd_rate, investment_czk)
+            bitcoin_data, czk_usd_rate = fetch_data(start_date, end_date)
+            formatted_profit_loss = "{:,.0f}".format(profit_loss_czk).replace(",", " ")  # Nahrazení čárky mezerou
+            formatted_profit_loss += " Kč"  # Přidání "Kč" místo "CZK"
 
-    if st.button("Spočítejte potenciální zisk/ztrátu"):
-        profit_loss_czk, profit_loss_percentage = calculate_profit_loss(bitcoin_data, czk_usd_rate, investment_czk)
-        formatted_profit_loss = "{:,.0f}".format(profit_loss_czk).replace(",", " ")  # Nahrazení čárky mezerou
-        formatted_profit_loss += " Kč"  # Přidání "Kč" místo "CZK"
-
-        if profit_loss_czk > 0:
-            formatted_profit_loss_percentage = "+{:.2f}%".format(profit_loss_percentage)
-            st.success(f"Potenciální zisk: {formatted_profit_loss} ({formatted_profit_loss_percentage})")
-        else:
-            formatted_profit_loss_percentage = "{:.2f}%".format(profit_loss_percentage)
-            st.error(f"Potenciální ztráta: {formatted_profit_loss} ({formatted_profit_loss_percentage})")
+            if profit_loss_czk > 0:
+                formatted_profit_loss_percentage = "+{:.2f}%".format(profit_loss_percentage)
+                st.success(f"Potenciální zisk: {formatted_profit_loss} ({formatted_profit_loss_percentage})")
+            else:
+                formatted_profit_loss_percentage = "{:.2f}%".format(profit_loss_percentage)
+                st.error(f"Potenciální ztráta: {formatted_profit_loss} ({formatted_profit_loss_percentage})")
 
     # Zobrazit graf
     st.write("")
