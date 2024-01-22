@@ -48,7 +48,7 @@ def main():
     max_start_date = datetime.now() - timedelta(days=7)
 
     start_date = st.date_input("Den investice", datetime(2020, 1, 1),max_value=max_start_date)
-    end_date = st.date_input("Den výběru peněz", datetime.now())
+    end_date = st.date_input("Den výběru peněz", datetime.now(),max_value=datetime.now())
     investment_czk = st.number_input("Zadejte investovanou částku v Kč", min_value=0.0, value=10000.0)
 
     # Kontrola, zda start_date není po end_date a nejsou stejná
