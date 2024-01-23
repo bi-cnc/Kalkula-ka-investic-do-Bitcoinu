@@ -57,7 +57,7 @@ def plot_bitcoin_data(bitcoin_data, start_date, end_date):
 
     ax.set_xlabel('Datum',fontweight='bold')
     ax.set_ylabel('Cena (USD)',fontweight='bold')
-    ax.set_title('Historie ceny Bitcoinu',fontweight='bold',pad=10)
+    ax.set_title('Historie ceny bitcoinu',fontweight='bold',pad=10)
     
     ax.legend()
     st.pyplot(fig)
