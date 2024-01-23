@@ -41,20 +41,23 @@ def calculate_profit_loss(bitcoin_data, czk_usd_rate, investment_czk):
 
     return profit_loss_czk, profit_loss_percentage
 
-import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+
+def thousands_separator(x, pos):
+    """Pomocná funkce pro formátování s mezerou jako oddělovačem tisíců."""
+    return f'{x:,.0f}'.replace(',', ' ')
 
 def plot_bitcoin_data(bitcoin_data, start_date, end_date):
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(bitcoin_data.index, bitcoin_data['Close'], label='Cena Bitcoinu (USD)', color='#FF4B4B')
 
-    # Zobrazení méně popisků na ose X, pokud je rozsah dat menší nebo roven jednomu měsíci
-    if (end_date - start_date).days <= 160:
-        ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=5))  # Omezení na maximálně 15 popisků
+    # Nastavení formátu popisků na ose Y
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(thousands_separator))
 
-    ax.set_xlabel('Datum')
-    ax.set_ylabel('Cena (USD)')
-    ax.set_title('Historie ceny Bitcoinu')
+    ax.set_xlabel('Datum',fontweight='bold')
+    ax.set_ylabel('Cena (USD)',fontweight='bold')
+    ax.set_title('Historie ceny Bitcoinu',fontweight='bold',pad=10)
     
     ax.legend()
     st.pyplot(fig)
