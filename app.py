@@ -48,16 +48,20 @@ def thousands_separator(x, pos):
     """Pomocná funkce pro formátování s mezerou jako oddělovačem tisíců."""
     return f'{x:,.0f}'.replace(',', ' ')
 
+
 def plot_bitcoin_data(bitcoin_data, start_date, end_date):
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(bitcoin_data.index, bitcoin_data['Close'], label='Cena bitcoinu (USD)', color='#FF4B4B')
+    ax.plot(bitcoin_data.index, bitcoin_data['Close'], label='Cena Bitcoinu (USD)', color='#FF4B4B')
 
     # Nastavení formátu popisků na ose Y
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(thousands_separator))
+    # Zobrazení méně popisků na ose X, pokud je rozsah dat menší nebo roven jednomu měsíci
+    if (end_date - start_date).days <= 160:
+        ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=5))  # Omezení na maximálně 15 popisků
 
     ax.set_xlabel('Datum',fontweight='bold')
     ax.set_ylabel('Cena (USD)',fontweight='bold')
-    ax.set_title('Historie ceny bitcoinu',fontweight='bold',pad=10)
+    ax.set_title('Historie ceny Bitcoinu',fontweight='bold',pad=10)
     
     ax.legend()
     st.pyplot(fig)
