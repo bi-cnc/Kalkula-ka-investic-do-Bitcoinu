@@ -6,10 +6,21 @@ import matplotlib.pyplot as plt
 # Nastavení Streamlitu pro zobrazení grafů
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
+from datetime import timedelta
+
 def fetch_data(start_date, end_date):
-    bitcoin_data = yf.download("BTC-USD", start=start_date, end=end_date)
-    czk_usd_rate = yf.download("CZK=X", start=start_date, end=end_date)
+    # Přidání jednoho dne k end_date
+    end_date_plus_one = end_date + timedelta(days=1)
+    
+    bitcoin_data = yf.download("BTC-USD", start=start_date, end=end_date_plus_one)
+    czk_usd_rate = yf.download("CZK=X", start=start_date, end=end_date_plus_one)
     return bitcoin_data, czk_usd_rate
+
+# start_date = datetime(2021, 1, 1)
+# end_date = datetime(2021, 2, 1)
+
+# data = fetch_data(start_date, end_date)
+
 
 # Výpočet zisku/ztráty a procentuální změny
 def calculate_profit_loss(bitcoin_data, czk_usd_rate, investment_czk):
@@ -48,7 +59,7 @@ def main():
     max_start_date = datetime.now() - timedelta(days=7)
 
     start_date = st.date_input("Den investice", datetime(2020, 1, 1),max_value=max_start_date)
-    end_date = st.date_input("Den výběru peněz", datetime.now(), max_value=datetime.now())
+    end_date = st.date_input("Den výběru peněz", datetime.now())
     investment_czk = st.number_input("Zadejte investovanou částku v Kč", min_value=0.0, value=10000.0)
 
     # Kontrola, zda start_date není po end_date a nejsou stejná
@@ -64,11 +75,12 @@ def main():
             formatted_profit_loss = "{:,.0f}".format(profit_loss_czk).replace(",", " ")  # Nahrazení čárky mezerou
             formatted_profit_loss += " Kč"  # Přidání "Kč" místo "CZK"
 
+
             if profit_loss_czk > 0:
-                formatted_profit_loss_percentage = "+{:.2f}%".format(profit_loss_percentage)
+                formatted_profit_loss_percentage = "+{:.2f} %".format(profit_loss_percentage)
                 st.success(f"Potenciální zisk: {formatted_profit_loss} ({formatted_profit_loss_percentage})")
             else:
-                formatted_profit_loss_percentage = "{:.2f}%".format(profit_loss_percentage)
+                formatted_profit_loss_percentage = "{:.2f} %".format(profit_loss_percentage)
                 st.error(f"Potenciální ztráta: {formatted_profit_loss} ({formatted_profit_loss_percentage})")
 
     # Zobrazit graf
