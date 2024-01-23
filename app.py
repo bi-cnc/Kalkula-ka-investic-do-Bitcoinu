@@ -50,7 +50,7 @@ def thousands_separator(x, pos):
 
 def plot_bitcoin_data(bitcoin_data, start_date, end_date):
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(bitcoin_data.index, bitcoin_data['Close'], label='Cena Bitcoinu (USD)', color='#FF4B4B')
+    ax.plot(bitcoin_data.index, bitcoin_data['Close'], label='Cena bitcoinu (USD)', color='#FF4B4B')
 
     # Nastavení formátu popisků na ose Y
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(thousands_separator))
@@ -66,7 +66,7 @@ def plot_bitcoin_data(bitcoin_data, start_date, end_date):
 # Streamlit aplikace
 def main():
     st.title("Kdybych investoval, kolik bych vydělal nebo prodělal?")
-    large_font = "<h2 style='font-size:16px; color: black;'>Kalkulačka investic do Bitcoinu 🚀</h2>"
+    large_font = "<h2 style='font-size:16px; color: black;'>Kalkulačka investic do bitcoinu 🚀</h2>"
     st.markdown(large_font, unsafe_allow_html=True)
     max_start_date = datetime.now() - timedelta(days=7)
 
