@@ -2,4 +2,3 @@ pandas==2.1.1
 streamlit==1.30.0
 yfinance==0.2.33
 matplotlib==3.8.2
-pandas-market-calendars==4.3.3
