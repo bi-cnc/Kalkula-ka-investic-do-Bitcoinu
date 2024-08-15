@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 # Nastavení Streamlitu pro zobrazení grafů
 # st.set_option('deprecation.showPyplotGlobalUse', False)
 
+# Vypnutí sledování změn
+st.stop()
+
 from datetime import timedelta
 
 def fetch_data(start_date, end_date):
